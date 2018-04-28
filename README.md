@@ -40,20 +40,25 @@ The malware encrypt with a RSA-4096 (RSA-OAEP-4096 + SHA256) public key any payl
 
 ### Building the binaries
 
-> DON'T RUN ransomware.exe IN YOUR PERSONAL MACHINE, EXECUTE ONLY IN A TEST ENVIRONMENT! I'm not resposible if you acidentally encrypt all of your disks!
+## Prerequisites
+If you are on linux, be sure you have installes all required depencies;
+glide       > https://github.com/Masterminds/glide
+go-bindata  > apt install -y go-bindata
+rsrc        > go get github.com/akavel/rsrc
 
-First of all download the project:
+> Note: DON'T RUN ransomware.exe IN YOUR PERSONAL MACHINE, EXECUTE ONLY IN A TEST ENVIRONMENT! I'm not responsible if you accidentlly encrypt all of your disks!
 
+Download the project:
 ```bash
 go get -v github.com/mauri870/ransomware
 cd $GOPATH/src/github.com/mauri870/ransomware
 ```
 
-> If you have Docker skip to the next section.
+> If you have "Docker" skip to the next section.
 
-You need Go at least 1.8 with the `$GOPATH/bin` in your $PATH and `$GOROOT` pointing to your Go installation folder
+You need Go at least version 1.8 with `$GOPATH/bin` in your $PATH and `$GOROOT` pointing to your Go installation folder.
 
-Build the project require a lot of steps, like the RSA key generation, build three binaries, embed manifest files, so, let's leave `make` do your job:
+Building the project requires a lot of steps, like the RSA key generation, build three binaries, embed manifest files, so, let's leave `make` do your job:
 
 ```bash
 make deps
