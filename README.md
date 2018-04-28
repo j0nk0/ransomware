@@ -4,7 +4,7 @@
 
 > Note 1: This project is purely academic, use at your own risk. I do not encourage in any way the use of this software illegally or to attack targets without their previous authorization.
 
-> Note 2: Unfortunatelly now some antiviruses (including Windows Defender) detects the unlocker as a virus. Disable any antivirus to play with the project.
+> Note 2: Unfortunately now some antiviruses (including Windows Defender) detects the unlocker as a virus do disable any antivirus to play with the project.
 
 **Remember, security is always a double-edged sword**
 
@@ -38,17 +38,23 @@ The malware encrypt with a RSA-4096 (RSA-OAEP-4096 + SHA256) public key any payl
 - Walk all drives by default.
 - Docker image for compilation.
 
-### Building the binaries
+## Building the binaries
 
-## Prerequisites
+### Prerequisites
 If you are on linux, be sure you have installes all required depencies;
+
+You need Go at least version 1.8 with `$GOPATH/bin` in your $PATH and `$GOROOT` pointing to your Go installation folder.
+```bash
 glide       > https://github.com/Masterminds/glide
+
 go-bindata  > apt install -y go-bindata
+
 rsrc        > go get github.com/akavel/rsrc
+```
 
 > Note: DON'T RUN ransomware.exe IN YOUR PERSONAL MACHINE, EXECUTE ONLY IN A TEST ENVIRONMENT! I'm not responsible if you accidentlly encrypt all of your disks!
 
-Download the project:
+#### Download the project:
 ```bash
 go get -v github.com/j0nk0/ransomware
 cd $GOPATH/src/github.com/j0nk0/ransomware
@@ -56,15 +62,13 @@ cd $GOPATH/src/github.com/j0nk0/ransomware
 
 > If you have "Docker" skip to the next section.
 
-You need Go at least version 1.8 with `$GOPATH/bin` in your $PATH and `$GOROOT` pointing to your Go installation folder.
-
 Building the project requires a lot of steps, like the RSA key generation, build three binaries, embed manifest files, so, let's leave `make` do your job:
 
 ```bash
 make deps
 make
 ```
-You can build the server for windows with `make -e GOOS=windows`.
+You can build the server for windows with `make -e GOOS=windows`(Default is linux).
 
 #### Docker
 
@@ -74,27 +78,27 @@ You can build the server for windows with `make -e GOOS=windows`.
 
 #### Config Parameters
 
-You can change some of the configs during compilation. Instead of run only `make`, you can use the following variables:
+You can change some of the parameters during compilation. Instead of running only `make`, you can use;
 
 ```bash
-HIDDEN='-H windowsgui' # optional. If present the malware will run in background
+HIDDEN='-H windowsgui' # (optional) will hide the console on deployment and make it discard all logs performed by the malware and will make it run silently in background.
 
-USE_TOR=true # optional. If present the malware will download the Tor proxy and use it to contact the server
+USE_TOR=true # optional. If true, the malware will download the Tor proxy and use it to contact the server
 
-SERVER_HOST=mydomain.com # the domain used to connect to your server. localhost, 0.0.0.0, 127.0.0.1 works too if you run the server on the same machine as the malware
+SERVER_HOST=mydomain.com # The domain used to connect to your server. localhost, 0.0.0.0, 127.0.0.1 works too if you run the server on the same machine as the malware
 
-SERVER_PORT=8080 # the server port, if using a domain you can set this to 80
+SERVER_PORT=8080 # The server port, if using a domain you can set this to 80
 
-GOOS=linux # the target os to compile the server. Eg: darwin, linux, windows
+GOOS=linux # The target OS to compile the server for. Eg: darwin, linux, windows
 ```
 
-Example:
+#### Example:
 
 `make -e USE_TOR=true SERVER_HOST=mydomain.com SERVER_PORT=80 GOOS=darwin`
 
 The `SERVER_` variables above only apply to the malware. The server has a flag `--port` that you can use to change the port that it will listen on.
 
-> DON'T RUN ransomware.exe IN YOUR PERSONAL MACHINE, EXECUTE ONLY IN A TEST ENVIRONMENT! I'm not resposible if you acidentally encrypt all of your disks!
+> DON'T RUN ransomware.exe IN YOUR PERSONAL MACHINE, EXECUTE ONLY IN A TEST ENVIRONMENT! I'm not responsible if you accidentally encrypt all of your disks!
 
 ## Step by Step Demo and How it Works
 
@@ -122,13 +126,13 @@ The `SERVER_PORT` needs to be `80` in this case, since ngrok redirects `2af7161c
 
 After build, a binary called `ransomware.exe`, and `unlocker.exe` along with a folder called `server` will be generated in the bin folder. The execution of `ransomware.exe` and `unlocker.exe` (even if you use a diferent GOOS variable during compilation) is locked to windows machines only.
 
-Enter the server directory from another terminal and start it:
+Enter the server directory from another terminal and start the server;
 
 ```bash
 cd bin/server && ./server --port 8080
 ```
 
-To make sure that all is working correctly, make a http request to `http://2af7161c.ngrok.io`:
+To make sure that all is working correctly, make a http request to your server`(e.g http://2af7161c.ngrok.io`:)
 
 ```bash
 curl http://2af7161c.ngrok.io
@@ -142,13 +146,13 @@ Then simply run the `ransomware.exe` and see the magic happens :smile:.
 
 The window that you see can be hidden using the `HIDDEN` option described in the compilation section.
 
-After download, extract and start the Tor proxy, the malware waits until the tor bootstrapping is done and then proceed with the key exchange with the server. The client/server handshake takes place and the client payload, encrypted with an RSA-4096 public key must be correctly decrypted on the server. The victim identification and encryption keys are stored in a Golang embedded database called BoltDB (it also persists on disk). When completed we get into the find, match and encrypt phase, up to N-cores workers start to encrypt files matched by the patterns defined. This proccess is really quick and in seconds all of your files will be gone.
+After download, extract and start the Tor proxy, the malware waits until the tor bootstrapping is done and then proceed with the key exchange with the server. The client/server handshake takes place and the client payload, encrypted with an RSA-4096 public key must be correctly decrypted on the server. The victims identification and encryption keys are stored in a Golang embedded database called BoltDB (it also persists on disk). When completed we get into the "find, match and encrypt phase", up to N-cores workers start to encrypt files matched by the patterns defined. This proccess is really quick and in seconds all of your files will be encrypted.
 
 The encryption key exchanged with the server was used to encrypt all of your files. Each file has a random primitive called [IV](https://en.wikipedia.org/wiki/Initialization_vector), generated individually and saved as the first 16 bytes of the encrypted content. The algorithm used is AES-256-CTR, a good AES cypher with streaming mode of operation such that the file size is left intact.
 
-The only two sources of information available about what just happen are the `READ_TO_DECRYPT.html` and `FILES_ENCRYPTED.html` in the Desktop.
+The only two sources of information available about what just happen are saved on the Desktop: the `READ_TO_DECRYPT.html` and `FILES_ENCRYPTED.html` files.
 
-In theory, to decrypt your files you need to send an amount of BTC to the attacker's wallet, followed by a contact sending your ID(located on the file created on desktop). If the attacker can confirm your payment it will possibly(or maybe not) return your encryption key and the `unlocker.exe` and you can use then to recover your files. This exchange can be accomplished in several ways and WILL NOT be implemented in this project for obvious reasons.
+In theory, to decrypt your files you need to send an amount of BTC to the attacker's wallet, followed by a contact sending your ID(located on the file created on desktop). If the attacker confirms your payment, it will return your encryption key which can be used with the `unlocker.exe` to recover/decrypt your files. This exchange can be accomplished in several ways and WILL NOT be implemented in this project for obvious reasons.
 
 Let's suppose you get your encryption key back. To recover the correct key point to the following url:
 
@@ -156,11 +160,9 @@ Let's suppose you get your encryption key back. To recover the correct key point
 curl -k http://2af7161c.ngrok.io/api/keys/:id
 ```
 
-Where `:id` is your identification stored in the file on desktop. After, run the `unlocker.exe` by double click and follow the instructions.
+Where `:id` is your identification stored in the file on desktop. Then run the `unlocker.exe` and follow the instructions to recover/decrypt the files
 
-That's it, got your files back :smile:
-
-The server has only two endpoints:
+#### The server has only two endpoints:
 
 `POST api/keys/add` - Used by the malware to persist new keys. Some verifications are made, like the verification of the RSA autenticity. Returns 204 (empty content) in case of success or a json error.
 
@@ -168,4 +170,4 @@ The server has only two endpoints:
 
 ## The end
 
-As you can see, building a functional ransomware, with some of the best existing algorithms is not dificult, anyone with some programming skills can build that in any programming language.
+As you can see, building a functional ransomware, with some of the best existing algorithms is not dificult, anyone with some programming skills can build it, in any programming language.
