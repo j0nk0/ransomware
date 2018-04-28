@@ -1,4 +1,4 @@
-package: github.com/mauri870/ransomware
+package: github.com/j0nk0/ransomware
 import:
 - package: github.com/codegangsta/negroni
   version: ^0.2.0

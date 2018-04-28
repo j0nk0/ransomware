@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mauri870/ransomware/rsa"
+	"github.com/j0nk0/ransomware/rsa"
 	"golang.org/x/net/proxy"
 )
 

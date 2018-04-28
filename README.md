@@ -1,6 +1,6 @@
 # Ransomware
 
-[![Build Status](https://travis-ci.org/mauri870/ransomware.svg?branch=master)](https://travis-ci.org/mauri870/ransomware)
+[![Build Status](https://travis-ci.org/j0nk0/ransomware.svg?branch=master)](https://travis-ci.org/j0nk0/ransomware)
 
 > Note 1: This project is purely academic, use at your own risk. I do not encourage in any way the use of this software illegally or to attack targets without their previous authorization.
 
@@ -50,8 +50,8 @@ rsrc        > go get github.com/akavel/rsrc
 
 Download the project:
 ```bash
-go get -v github.com/mauri870/ransomware
-cd $GOPATH/src/github.com/mauri870/ransomware
+go get -v github.com/j0nk0/ransomware
+cd $GOPATH/src/github.com/j0nk0/ransomware
 ```
 
 > If you have "Docker" skip to the next section.
@@ -136,7 +136,7 @@ curl http://2af7161c.ngrok.io
 
 If you see a `OK` and some logs in the server output you are ready to go.
 
-Now move the `ransomware.exe` and `unlocker.exe` to the VM along with some dummy files to test the malware. You can take a look at [cmd/common.go](https://github.com/mauri870/ransomware/blob/master/cmd/common.go) to see some configuration options like file extensions to match, directories to scan, skipped folders, max size to match a file among others.
+Now move the `ransomware.exe` and `unlocker.exe` to the VM along with some dummy files to test the malware. You can take a look at [cmd/common.go](https://github.com/j0nk0/ransomware/blob/master/cmd/common.go) to see some configuration options like file extensions to match, directories to scan, skipped folders, max size to match a file among others.
 
 Then simply run the `ransomware.exe` and see the magic happens :smile:.
 

