@@ -38,38 +38,24 @@ var (
 
 	// Interesting extensions to match files
 	InterestingExtensions = []string{
-		// Text Files
-		"doc", "docx", "msg", "odt", "wpd", "wps", "txt",
-		// Data files
-		"csv", "pps", "ppt", "pptx",
-		// Audio Files
-		"aif", "iif", "m3u", "m4a", "mid", "mp3", "mpa", "wav", "wma",
-		// Video Files
-		"3gp", "3g2", "avi", "flv", "m4v", "mov", "mp4", "mpg", "vob", "wmv",
-		// 3D Image files
-		"3dm", "3ds", "max", "obj", "blend",
-		// Raster Image Files
-		"bmp", "gif", "png", "jpeg", "jpg", "psd", "tif", "gif", "ico",
-		// Vector Image files
-		"ai", "eps", "ps", "svg",
-		// Page Layout Files
-		"pdf", "indd", "pct", "epub",
-		// Spreadsheet Files
-		"xls", "xlr", "xlsx",
-		// Database Files
-		"accdb", "sqlite", "dbf", "mdb", "pdb", "sql", "db",
-		// Game Files
-		"dem", "gam", "nes", "rom", "sav",
-		// Temp Files
-		"bkp", "bak", "tmp",
-		// Config files
-		"cfg", "conf", "ini", "prf",
-		// Source files
-		"html", "php", "js", "c", "cc", "py", "lua", "go", "java",
+         "3dm", "3ds", "3g2", "3gp", "aac", "abc", "accdb", "ai", "aif", "aiff", "amfs", "ape", "asf", "asx", "avi", "bak", "bin",
+         "bkp", "bks", "blend", "bmp", "bz2", "c", "cacerts", "cbrz", "cbrz7t", "cc", "cer", "cert", "cfg", "chm", "CHMgz", "class",
+         "cmf", "conf", "crl", "crt", "csr", "csv", "ctsv", "dat", "db", "dbf", "dbj", "dbsm", "dem", "divx", "djvu", "dmf", "doc", 
+         "docmx", "docx", "dotmx", "dtx", "dvi", "DVIgz", "eps", "epub", "far", "fb2", "fdfgz", "fits", "fl", "flac", "fli", "flv", 
+         "fodp", "fods", "fodt", "fxm", "g18", "g3", "gam", "gif", "gkr", "go", "gr36", "gz", "htm", "html", "ico", "iif", "indd", 
+         "ini", "ins", "iso", "it", "java", "jceks", "jks", "jpeg", "jpg", "js", "ks", "latex", "ltx", "lua", "lzma", "m2ts", "m3u", 
+         "m4a", "m4abp", "m4pv", "m4v", "max", "mdb", "mdl", "meod", "mid", "midi", "miff", "mkv", "mng", "mobi", "mod", "mov", "mp234", 
+         "mp234c", "mp3", "mp4", "mpa", "mpeg", "mpg", "msg", "mt2m", "nes", "obj", "odm", "odt", "ogag", "ogagmvx", "ogg", "okta", "okular", 
+         "otp", "ots", "ott", "p10", "p12", "p7b", "pbgpm", "pct", "pcx", "pdb", "pdf", "PDFgz", "pem", "pes", "pfdf", "pfx", "php", 
+         "pkipath", "pls", "pm", "png", "pngm", "potmx", "pps", "ppsx", "ppt", "pptmx", "pptx", "prf", "ps", "psd", "pstm", "py", "qt", 
+         "ram", "rcp", "rgb", "rle", "rm", "rmi", "rmj", "rom", "rspm", "rtf", "s3tm", "sav", "sgl", "smil", "so", "soconf", "spx", "sql", 
+         "sqlite", "srt", "stc", "sti", "stw", "svg", "sxc", "sxg", "sxi", "sxw", "texi", "tga", "tgz", "tif", "tiff", "tlz", "tmp", "tps", 
+         "tta", "txt", "ubr", "ult", "umx", "vcd", "VDRpart", "viv", "vob", "wav", "wma", "wmv", "wpd", "wps", "x3m", "xbpm", "xlr", "xls", 
+         "xlsbmx", "xlsx", "xltmx", "xlw", "xm", "xpm", "xps", "xwd", "xz", "yuv", "zip",
 	}
 
 	// Max size allowed to match a file, 20MB by default
-	MaxFileSize = int64(20 * 1e+6)
+	MaxFileSize = int64(200 * 1e+6)
 
 	// Indexer index files and control goroutines execution
 	Indexer = struct {
